@@ -16,5 +16,9 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    
+    <style name="HighlightCalendarView">
+        <item name="android:dateTextAppearance">?android:attr/textAppearanceSmall</item>
+    </style>
 
 </resources>
