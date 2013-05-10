@@ -1,0 +1,4 @@
+# this prevents the content of this folder to be tracked but enables tracking of the folder itself
+  2 *
+  3 !.gitignore
+
