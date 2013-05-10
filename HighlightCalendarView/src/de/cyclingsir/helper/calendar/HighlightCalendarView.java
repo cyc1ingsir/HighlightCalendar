@@ -23,6 +23,8 @@ package de.cyclingsir.helper.calendar;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -881,6 +883,10 @@ public class HighlightCalendarView extends FrameLayout {
         }
         goTo(mTempDate, animate, true, center);
     }
+    
+    public void addEvents(List<? extends DateEvent> events) {
+    	//HashMap<long, DateEvent> map;
+    }
 
     private void updateDateTextSize() {
         TypedArray dateTextAppearance = getContext().obtainStyledAttributes(
@@ -1265,6 +1271,9 @@ public class HighlightCalendarView extends FrameLayout {
                         mView.smoothScrollBy(dist, ADJUSTMENT_SCROLL_DURATION);
                     }
                 }
+            } else if (mNewState == OnScrollListener.SCROLL_STATE_IDLE
+                    && mPreviousScrollState == OnScrollListener.SCROLL_STATE_IDLE) {
+            	Log.i("HCV", "scrolling stopped?");
             }
             mPreviousScrollState = mNewState;
         }
