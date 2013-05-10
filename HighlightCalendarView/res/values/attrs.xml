@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+ 	<declare-styleable name="HighlightCalendarView">
+       <!-- The text appearance for the week day abbreviation of the calendar header. -->
+       <attr name="weekDayTextAppearance" format="reference" />
+       <!-- The text appearance for the calendar dates. -->
+       <attr name="dateTextAppearance" format="reference" />
+ 	</declare-styleable>
+ 	
+ 	<declare-styleable name="TextAppearance">
+ 	    <attr name="textSize" format="reference" />
+ 	</declare-styleable>
+</resources>
