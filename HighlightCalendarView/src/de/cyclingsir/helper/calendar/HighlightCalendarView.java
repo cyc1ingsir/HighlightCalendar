@@ -23,7 +23,6 @@ package de.cyclingsir.helper.calendar;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -957,18 +956,6 @@ public class HighlightCalendarView extends FrameLayout {
     private void setUpAdapter() {
         if (mAdapter == null) {
             mAdapter = new WeeksAdapter(getContext());
-            mAdapter.registerDataSetObserver(new DataSetObserver() {
-                @Override
-                public void onChanged() {
-                    if (mOnDateChangeListener != null) {
-                        Calendar selectedDay = mAdapter.getSelectedDay();
-                        mOnDateChangeListener.onDaySelected(HighlightCalendarView.this,
-                                selectedDay.get(Calendar.YEAR),
-                                selectedDay.get(Calendar.MONTH),
-                                selectedDay.get(Calendar.DAY_OF_MONTH));
-                    }
-                }
-            });
             mListView.setAdapter(mAdapter);
         }
 
@@ -1031,6 +1018,7 @@ public class HighlightCalendarView extends FrameLayout {
         // Make the scrolling behavior nicer
         mListView.setFriction(mFriction);
         mListView.setVelocityScale(mVelocityScale);
+ 
     }
 
     /**
@@ -1404,6 +1392,10 @@ public class HighlightCalendarView extends FrameLayout {
                     return true;
                 }
                 onDateTapped(mTempDate);
+        		mOnDateChangeListener.onDaySelected(HighlightCalendarView.this,
+        				mTempDate.get(Calendar.YEAR),
+        				mTempDate.get(Calendar.MONTH),
+        				mTempDate.get(Calendar.DAY_OF_MONTH));
                 return true;
             }
             return false;
