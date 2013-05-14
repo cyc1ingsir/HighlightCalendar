@@ -1,5 +1,7 @@
 package de.cyclingsir.helper.calendar.example;
 
+import java.util.Calendar;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.widget.Toast;
@@ -21,6 +23,20 @@ public class CustomCalendarActivity extends Activity {
 				Toast.makeText(getApplicationContext(), "" + dayOfMonth, Toast.LENGTH_SHORT).show();
 				
 			}
+
+			@Override
+			public void onViewChanged(long startDate, long endDate) {
+				Calendar startCalendar = Calendar.getInstance();
+				startCalendar.setTimeInMillis(startDate);
+				Calendar endCalendar = Calendar.getInstance();
+				endCalendar.setTimeInMillis(endDate);
+				Toast.makeText(getApplicationContext(), "srolled to " 
+					+ startCalendar.get(Calendar.DAY_OF_MONTH) + "." + (startCalendar.get(Calendar.MONTH)+1)+ "."
+					+ " - "
+					+ endCalendar.get(Calendar.DAY_OF_MONTH) + "." + (endCalendar.get(Calendar.MONTH)+1)+ ".", 
+					Toast.LENGTH_SHORT).show();
+			}
+			
 		}); 
 	}
 }

@@ -328,6 +328,8 @@ public class HighlightCalendarView extends FrameLayout {
          * @param dayOfMonth The day of the month that was set.
          */
         public void onDaySelected(HighlightCalendarView view, int year, int month, int dayOfMonth);
+        
+        public void onViewChanged(long startDate, long endDate);
     }
 
     public HighlightCalendarView(Context context) {
@@ -1253,16 +1255,26 @@ public class HighlightCalendarView extends FrameLayout {
                 }
                 int dist = child.getBottom() - mListScrollTopOffset;
                 if (dist > mListScrollTopOffset) {
+
                     if (mIsScrollingUp) {
                         mView.smoothScrollBy(dist - child.getHeight(), ADJUSTMENT_SCROLL_DURATION);
                     } else {
                         mView.smoothScrollBy(dist, ADJUSTMENT_SCROLL_DURATION);
                     }
+                }else {
+                	WeekView week = (WeekView) mView.getChildAt(1);
+                	Calendar startCal = week.getFirstDay(); 
+                	long startDate = startCal.getTimeInMillis();
+                	//long endDate = mView.getLastVisiblePosition();
+                	week = (WeekView) mView.getChildAt(mShownWeekCount);
+                	Calendar endCal = week.getFirstDay();
+                	endCal.add(Calendar.DAY_OF_MONTH, DAYS_PER_WEEK-1);
+                	mOnDateChangeListener.onViewChanged(startDate , endCal.getTimeInMillis());
+//                Calendar endDate = ((WeekView) mAdapter.getItem(mListView.getLastVisiblePosition())).getFirstDay();
+//                endDate.add(Calendar.DAY_OF_MONTH, DAYS_PER_WEEK);
+//                mOnDateChangeListener.onViewChanged(startDate , endDate.getTimeInMillis());
                 }
-            } else if (mNewState == OnScrollListener.SCROLL_STATE_IDLE
-                    && mPreviousScrollState == OnScrollListener.SCROLL_STATE_IDLE) {
-            	Log.i("HCV", "scrolling stopped?");
-            }
+            } 
             mPreviousScrollState = mNewState;
         }
     }
