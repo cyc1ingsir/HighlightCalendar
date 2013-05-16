@@ -50,16 +50,18 @@ public class CustomCalendarActivity extends Activity {
 					+ " - "
 					+ endCalendar.get(Calendar.DAY_OF_MONTH) + "." + (endCalendar.get(Calendar.MONTH)+1)+ ".",
 					Toast.LENGTH_SHORT).show();
-				Log.d("CCV", "srolled to "
-					+ startCalendar.get(Calendar.DAY_OF_MONTH) + "." + (startCalendar.get(Calendar.MONTH)+1)+ "."
-					+ " - "
-					+ endCalendar.get(Calendar.DAY_OF_MONTH) + "." + (endCalendar.get(Calendar.MONTH)+1)+ ".");
 				mEvents.clear();
 
 				mEvents.add(new ExampleEvent(startDate));
 				mEvents.add(new ExampleEvent(startDate));
 				mEvents.add(new ExampleEvent(endDate));
 				mCal.setTimeInMillis(startDate + (endDate - startDate)/2);
+				mEvents.add(new ExampleEvent(mCal.getTimeInMillis()));
+				mCal.setTimeInMillis(endDate);
+				mCal.add(Calendar.DAY_OF_MONTH, -10 - mCal.get(Calendar.MONTH));
+				mEvents.add(new ExampleEvent(mCal.getTimeInMillis()));
+				mCal.setTimeInMillis(startDate);
+				mCal.add(Calendar.DAY_OF_MONTH, 8 + mCal.get(Calendar.MONTH));
 				mEvents.add(new ExampleEvent(mCal.getTimeInMillis()));
 				calendarView.addEvents(mEvents);
 			}
