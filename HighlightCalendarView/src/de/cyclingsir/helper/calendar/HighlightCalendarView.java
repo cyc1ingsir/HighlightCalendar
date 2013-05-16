@@ -912,6 +912,9 @@ public class HighlightCalendarView extends FrameLayout {
     		}
     		daysEvents.add(event);
 		}
+    	if( !events.isEmpty()) {
+    		mAdapter.notifyDataSetChanged();
+    	}
     }
 
     /**
@@ -1600,8 +1603,8 @@ public class HighlightCalendarView extends FrameLayout {
                 mHasUnfocusedDay &= !isFocusedDay;
                 final int dayHash = getDateHash( mTempDate.getTimeInMillis() );
                 final List<DateEvent> list = mEvents.get(dayHash);
-
                 mEventDay[i] = (list != null)?  !list.isEmpty() : false;
+
                 // do not draw dates outside the valid range to avoid user confusion
                 if (mTempDate.before(mMinDate) || mTempDate.after(mMaxDate)) {
                     mDayNumbers[i] = "";
@@ -1621,7 +1624,7 @@ public class HighlightCalendarView extends FrameLayout {
         }
 
         /**
-         * Initialize the paint isntances.
+         * Initialize the paint instances.
          */
         private void initilaizePaints() {
             mDrawPaint.setFakeBoldText(false);
