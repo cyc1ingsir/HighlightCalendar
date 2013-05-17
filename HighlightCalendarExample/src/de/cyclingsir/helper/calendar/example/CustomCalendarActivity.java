@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+import de.cyclingsir.helper.calendar.DateEvent;
 import de.cyclingsir.helper.calendar.HighlightCalendarView;
 import de.cyclingsir.helper.calendar.HighlightCalendarView.OnDateSelectedListener;
 
@@ -64,6 +65,12 @@ public class CustomCalendarActivity extends Activity {
 				mCal.add(Calendar.DAY_OF_MONTH, 8 + mCal.get(Calendar.MONTH));
 				mEvents.add(new ExampleEvent(mCal.getTimeInMillis()));
 				calendarView.addEvents(mEvents);
+			}
+
+			@Override
+			public void onEventSelected(DateEvent event) {
+				Toast.makeText(getApplicationContext(), "Event selected: " + event,
+						Toast.LENGTH_SHORT).show();
 			}
 
 		});

@@ -12,9 +12,11 @@ import de.cyclingsir.helper.calendar.DateEvent;
 public class ExampleEvent implements DateEvent {
 
 	long mDate = 0;
+	int mRandom = 0;
 
 	public ExampleEvent( long date ) {
 		this.mDate = date;
+		mRandom = 1 + (int)(Math.random() * ((15 - 1) + 1));
 	}
 
 	/* (non-Javadoc)
@@ -23,6 +25,11 @@ public class ExampleEvent implements DateEvent {
 	@Override
 	public long getDate() {
 		return mDate;
+	}
+
+	@Override
+	public String toString() {
+		return new String ("Event: " + mRandom);
 	}
 
 }

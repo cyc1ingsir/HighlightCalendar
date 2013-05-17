@@ -53,6 +53,9 @@ import android.view.accessibility.AccessibilityEvent;
 import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
 import android.widget.ListView;
@@ -322,7 +325,12 @@ public class HighlightCalendarView extends FrameLayout {
     /**
      * The event store
      */
-    SparseArray<List<DateEvent>> mEvents = new SparseArray<List<DateEvent>>();
+    private final SparseArray<List<DateEvent>> mEvents = new SparseArray<List<DateEvent>>();
+
+    /**
+     * The event popup list
+     */
+    private final ListView mEventPopup;
 
     /**
      * The callback used to indicate the user changes the date.
@@ -339,7 +347,23 @@ public class HighlightCalendarView extends FrameLayout {
          */
         public void onDaySelected(HighlightCalendarView view, int year, int month, int dayOfMonth);
 
+        /**
+         * Called after the calendar was scrolled to a different
+         * view.
+         * The listener will be notified with the now shown first and
+         * last day.
+         * So the list of events may be refreshed for the shown range.
+         * @param startDate
+         * @param endDate
+         */
         public void onViewChanged(long startDate, long endDate);
+
+        /**
+         * If a day with an event attached was selected.
+         * The listener will be notified about which event was selected.
+         * @param event
+         */
+        public void onEventSelected(DateEvent event);
     }
 
     public HighlightCalendarView(Context context) {
@@ -417,6 +441,8 @@ public class HighlightCalendarView extends FrameLayout {
         } else {
             goTo(mTempDate, false, true, true);
         }
+
+        mEventPopup = (ListView) findViewById(R.id.eventlist);
 
         invalidate();
     }
@@ -928,6 +954,10 @@ public class HighlightCalendarView extends FrameLayout {
     private int getDateHash(long milliseconds){
     	final Calendar cal = Calendar.getInstance();
     	cal.setTimeInMillis(milliseconds);
+    	return getDateHash(cal);
+    }
+
+    private int getDateHash(Calendar cal) {
 		final int day = cal.get(Calendar.DAY_OF_MONTH);
 		final int month = cal.get(Calendar.MONTH);
 
@@ -1452,6 +1482,32 @@ public class HighlightCalendarView extends FrameLayout {
                     return true;
                 }
                 onDateTapped(mTempDate);
+                final int dayHash = getDateHash(mTempDate);
+                final List<DateEvent> list = mEvents.get(dayHash);
+                if(list != null && !list.isEmpty()) {
+                	final ArrayAdapter<DateEvent> adapter =
+                			new ArrayAdapter<DateEvent>(mContext,
+                			android.R.layout.simple_list_item_1,list);
+                	mEventPopup.setAdapter(adapter);
+                	mEventPopup.setOnItemSelectedListener(new OnItemSelectedListener() {
+
+						@Override
+						public void onItemSelected(AdapterView<?> parent,
+								View view, int position, long id) {
+							mEventPopup.setVisibility(View.INVISIBLE);
+							mListView.setEnabled(true);
+							mOnDateChangeListener.onEventSelected(adapter.getItem(position));
+						}
+
+						@Override
+						public void onNothingSelected(AdapterView<?> parent) {
+							// not considered here
+						}
+					});
+                	mListView.setEnabled(false);
+                	mEventPopup.setVisibility(View.VISIBLE);
+                }
+
         		mOnDateChangeListener.onDaySelected(HighlightCalendarView.this,
         				mTempDate.get(Calendar.YEAR),
         				mTempDate.get(Calendar.MONTH),
