@@ -54,6 +54,7 @@ import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
@@ -1489,19 +1490,14 @@ public class HighlightCalendarView extends FrameLayout {
                 			new ArrayAdapter<DateEvent>(mContext,
                 			android.R.layout.simple_list_item_1,list);
                 	mEventPopup.setAdapter(adapter);
-                	mEventPopup.setOnItemSelectedListener(new OnItemSelectedListener() {
+                	mEventPopup.setOnItemClickListener(new OnItemClickListener() {
 
 						@Override
-						public void onItemSelected(AdapterView<?> parent,
+						public void onItemClick(AdapterView<?> parent,
 								View view, int position, long id) {
 							mEventPopup.setVisibility(View.INVISIBLE);
 							mListView.setEnabled(true);
 							mOnDateChangeListener.onEventSelected(adapter.getItem(position));
-						}
-
-						@Override
-						public void onNothingSelected(AdapterView<?> parent) {
-							// not considered here
 						}
 					});
                 	mListView.setEnabled(false);
