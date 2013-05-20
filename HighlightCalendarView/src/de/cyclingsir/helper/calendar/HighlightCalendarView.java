@@ -1522,13 +1522,14 @@ public class HighlightCalendarView extends FrameLayout {
 					});
                 	mListView.setEnabled(false);
                 	mEventPopup.setVisibility(View.VISIBLE);
+                } else {
+                	mOnDateChangeListener.onAddEvent(mTempDate.getTimeInMillis());
                 }
 
         		mOnDateChangeListener.onDaySelected(HighlightCalendarView.this,
         				mTempDate.get(Calendar.YEAR),
         				mTempDate.get(Calendar.MONTH),
         				mTempDate.get(Calendar.DAY_OF_MONTH));
-        		mOnDateChangeListener.onAddEvent(mTempDate.getTimeInMillis());
                 return true;
             }
             return false;
