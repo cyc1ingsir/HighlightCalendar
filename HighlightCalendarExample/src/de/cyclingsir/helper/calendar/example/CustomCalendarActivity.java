@@ -5,7 +5,6 @@ import java.util.Calendar;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 import de.cyclingsir.helper.calendar.DateEvent;
 import de.cyclingsir.helper.calendar.HighlightCalendarView;
@@ -70,6 +69,16 @@ public class CustomCalendarActivity extends Activity {
 			@Override
 			public void onEventSelected(DateEvent event) {
 				Toast.makeText(getApplicationContext(), "Event selected: " + event,
+						Toast.LENGTH_SHORT).show();
+			}
+
+			@Override
+			public void onAddEvent(long date) {
+				final Calendar cal = Calendar.getInstance();
+				cal.setTimeInMillis(date);
+				Toast.makeText(getApplicationContext(), "New Event at: "
+						+ cal.get(Calendar.DAY_OF_MONTH) + "."
+						+ cal.get(Calendar.MONTH) + ".",
 						Toast.LENGTH_SHORT).show();
 			}
 

@@ -55,7 +55,6 @@ import android.widget.AbsListView;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.FrameLayout;
@@ -334,6 +333,13 @@ public class HighlightCalendarView extends FrameLayout {
     private final ListView mEventPopup;
 
     /**
+     * The text for menu entry for adding events on
+     * that day
+     * ToDo make this setable from outside
+     */
+    private final String mAddEventText = "Add Event";
+
+    /**
      * The callback used to indicate the user changes the date.
      */
     public interface OnDateSelectedListener {
@@ -365,6 +371,13 @@ public class HighlightCalendarView extends FrameLayout {
          * @param event
          */
         public void onEventSelected(DateEvent event);
+
+        /**
+         * Called when a user clicked on the menu entry to add a new
+         * event for this day or is a day is selected
+         * @param date
+         */
+        public void onAddEvent(long date);
     }
 
     public HighlightCalendarView(Context context) {
@@ -1489,6 +1502,8 @@ public class HighlightCalendarView extends FrameLayout {
                 	final ArrayAdapter<DateEvent> adapter =
                 			new ArrayAdapter<DateEvent>(mContext,
                 			android.R.layout.simple_list_item_1,list);
+                	final long lastDate = list.get(list.size() -1).getDate();
+                	adapter.add(new EventMenuEntry(lastDate, mAddEventText));
                 	mEventPopup.setAdapter(adapter);
                 	mEventPopup.setOnItemClickListener(new OnItemClickListener() {
 
@@ -1497,7 +1512,12 @@ public class HighlightCalendarView extends FrameLayout {
 								View view, int position, long id) {
 							mEventPopup.setVisibility(View.INVISIBLE);
 							mListView.setEnabled(true);
-							mOnDateChangeListener.onEventSelected(adapter.getItem(position));
+							final DateEvent event = adapter.getItem(position);
+							if( event instanceof EventMenuEntry ) {
+								mOnDateChangeListener.onAddEvent(event.getDate());
+							} else {
+								mOnDateChangeListener.onEventSelected(event);
+							}
 						}
 					});
                 	mListView.setEnabled(false);
@@ -1508,6 +1528,7 @@ public class HighlightCalendarView extends FrameLayout {
         				mTempDate.get(Calendar.YEAR),
         				mTempDate.get(Calendar.MONTH),
         				mTempDate.get(Calendar.DAY_OF_MONTH));
+        		mOnDateChangeListener.onAddEvent(mTempDate.getTimeInMillis());
                 return true;
             }
             return false;
@@ -1852,4 +1873,37 @@ public class HighlightCalendarView extends FrameLayout {
             setMeasuredDimension(MeasureSpec.getSize(widthMeasureSpec), mHeight);
         }
     }
+
+    /**
+     * <p>
+     * This class is intended to add a menu entry to the popup
+     * menu which is displayed the time the user clicks on a
+     * day with events attached to it.
+     * </p>
+     */
+    private class EventMenuEntry implements DateEvent {
+
+    	private final String mMenuText;
+    	private final long mDate;
+
+    	public EventMenuEntry(long date, String menuText){
+    		this.mMenuText = menuText;
+    		this.mDate = date;
+    	}
+
+    	/* (non-Javadoc)
+    	 * @see de.cyclingsir.helper.calendar.DateEvent#getDate()
+    	 */
+    	@Override
+    	public long getDate() {
+    		return mDate;
+    	}
+
+    	@Override
+    	public String toString() {
+    		return mMenuText;
+    	}
+
+    }
+
 }
