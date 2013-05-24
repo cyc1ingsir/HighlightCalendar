@@ -79,7 +79,9 @@ public class CustomCalendarActivity extends Activity {
 				mEvents.add(new ExampleEvent(startDate));
 				mEvents.add(new ExampleEvent(endDate));
 				mCal.setTimeInMillis(startDate + (endDate - startDate)/2);
-				mEvents.add(new ExampleEvent(mCal.getTimeInMillis()));
+				for (int i = 0; i < 15; i++) {
+					mEvents.add(new ExampleEvent(mCal.getTimeInMillis()));
+				}
 				mCal.setTimeInMillis(endDate);
 				mCal.add(Calendar.DAY_OF_MONTH, -10 - mCal.get(Calendar.MONTH));
 				mEvents.add(new ExampleEvent(mCal.getTimeInMillis()));
