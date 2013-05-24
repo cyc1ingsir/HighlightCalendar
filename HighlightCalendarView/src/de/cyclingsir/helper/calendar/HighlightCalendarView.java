@@ -334,6 +334,11 @@ public class HighlightCalendarView extends FrameLayout {
     private final ListView mEventPopup;
 
     /**
+     * The adapter for the event popup menu
+     */
+    private final ArrayAdapter<DateEvent> mPopupAdapter;
+
+    /**
      * The text for menu entry for adding events on
      * that day
      * ToDo make this setable from outside
@@ -458,6 +463,23 @@ public class HighlightCalendarView extends FrameLayout {
         }
 
         mEventPopup = (ListView) findViewById(R.id.eventlist);
+        mPopupAdapter = new ArrayAdapter<DateEvent>(mContext,
+    			android.R.layout.simple_list_item_1,new ArrayList<DateEvent>());
+        mEventPopup.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent,
+					View view, int position, long id) {
+				mEventPopup.setVisibility(View.INVISIBLE);
+				mListView.setEnabled(true);
+				final DateEvent event = mPopupAdapter.getItem(position);
+				if( event instanceof EventMenuEntry ) {
+					mOnDateChangeListener.onAddEvent(event.getDate());
+				} else {
+					mOnDateChangeListener.onEventSelected(event);
+				}
+			}
+		});
+        mEventPopup.setAdapter(mPopupAdapter);
 
         invalidate();
     }
@@ -944,15 +966,33 @@ public class HighlightCalendarView extends FrameLayout {
      */
     public void addEvents(List<? extends DateEvent> events) {
     	mEvents.clear();
+    	long lastDay = 0;
+    	long day = 0;
     	for (final DateEvent event : events) {
-    		final int key = getDateHash( event.getDate());
-    		List<DateEvent> daysEvents = mEvents.get(key, null );
+    		day = event.getDate();
+
+
+    		List<DateEvent> daysEvents;
+    		if(day != lastDay && lastDay > 0) {
+    			daysEvents = mEvents.get(getDateHash(lastDay), null );
+    			daysEvents.add(new EventMenuEntry(lastDay, mAddEventText));
+    		}
+
+    		final int key = getDateHash( day );
+    		daysEvents = mEvents.get(key, null );
     		if( daysEvents == null ){
     			daysEvents = new ArrayList<DateEvent>();
     			mEvents.put(key, daysEvents);
     		}
     		daysEvents.add(event);
+    		lastDay = day;
 		}
+
+    	if(day > 0) {
+    		final List<DateEvent> daysEvents = mEvents.get(getDateHash(day), null );
+			daysEvents.add(new EventMenuEntry(day, mAddEventText));
+		}
+
     	if( !events.isEmpty()) {
     		mAdapter.notifyDataSetChanged();
     	}
@@ -1500,28 +1540,12 @@ public class HighlightCalendarView extends FrameLayout {
                 final int dayHash = getDateHash(mTempDate);
                 final List<DateEvent> list = mEvents.get(dayHash);
                 if(list != null && !list.isEmpty()) {
-                	final ArrayAdapter<DateEvent> adapter =
-                			new ArrayAdapter<DateEvent>(mContext,
-                			android.R.layout.simple_list_item_1,list);
-                	final long lastDate = list.get(list.size() -1).getDate();
-                	adapter.add(new EventMenuEntry(lastDate, mAddEventText));
-                	mEventPopup.setAdapter(adapter);
-                	mEventPopup.setOnItemClickListener(new OnItemClickListener() {
 
-						@Override
-						public void onItemClick(AdapterView<?> parent,
-								View view, int position, long id) {
-							mEventPopup.setVisibility(View.INVISIBLE);
-							mListView.setEnabled(true);
-							final DateEvent event = adapter.getItem(position);
-							if( event instanceof EventMenuEntry ) {
-								mOnDateChangeListener.onAddEvent(event.getDate());
-							} else {
-								mOnDateChangeListener.onEventSelected(event);
-							}
-						}
-					});
-                	mListView.setEnabled(false);
+                	mPopupAdapter.clear();
+                	mPopupAdapter.addAll(list);
+                	mPopupAdapter.notifyDataSetChanged();
+
+                	// mListView.setEnabled(false);
                 	mEventPopup.setVisibility(View.VISIBLE);
                 } else {
                 	mOnDateChangeListener.onAddEvent(mTempDate.getTimeInMillis());
