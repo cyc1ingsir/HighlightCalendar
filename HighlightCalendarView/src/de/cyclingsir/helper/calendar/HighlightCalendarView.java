@@ -970,19 +970,18 @@ public class HighlightCalendarView extends FrameLayout {
     	long day = 0;
     	for (final DateEvent event : events) {
     		day = event.getDate();
-
+    		final int dayHash = getDateHash(day);
 
     		List<DateEvent> daysEvents;
-    		if(day != lastDay && lastDay > 0) {
+    		if(dayHash != getDateHash(lastDay) && lastDay > 0) {
     			daysEvents = mEvents.get(getDateHash(lastDay), null );
     			daysEvents.add(new EventMenuEntry(lastDay, mAddEventText));
     		}
 
-    		final int key = getDateHash( day );
-    		daysEvents = mEvents.get(key, null );
+    		daysEvents = mEvents.get(dayHash, null );
     		if( daysEvents == null ){
     			daysEvents = new ArrayList<DateEvent>();
-    			mEvents.put(key, daysEvents);
+    			mEvents.put(dayHash, daysEvents);
     		}
     		daysEvents.add(event);
     		lastDay = day;
