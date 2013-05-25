@@ -35,9 +35,9 @@ import de.cyclingsir.helper.calendar.HighlightCalendarView.OnDateSelectedListene
  */
 public class CustomCalendarActivity extends Activity {
 
-	final Calendar mCal = Calendar.getInstance();
-	final ArrayList<ExampleEvent> mEvents = new ArrayList<ExampleEvent>();
-	HighlightCalendarView calendarView;
+	private final Calendar mCal = Calendar.getInstance();
+	private final ArrayList<ExampleEvent> mEvents = new ArrayList<ExampleEvent>();
+	private HighlightCalendarView calendarView;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

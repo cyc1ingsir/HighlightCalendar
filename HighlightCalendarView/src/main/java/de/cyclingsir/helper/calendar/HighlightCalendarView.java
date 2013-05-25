@@ -1002,7 +1002,7 @@ public class HighlightCalendarView extends FrameLayout {
      * on the date ignoring the time.
      * It's unique for a range of about 356 with no overlapping
      * dates then ignoring the year.
-     * @param cal
+     * @param milliseconds
      * @return
      */
     private int getDateHash(long milliseconds){
