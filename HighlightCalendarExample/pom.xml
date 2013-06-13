@@ -10,7 +10,7 @@
         <version>1.0.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>highlight-calendar-view</artifactId>
+    <artifactId>highlight-calendar-example</artifactId>
     <packaging>apk</packaging>
     <name>highlight-calendar-example</name>
 
@@ -23,6 +23,7 @@
             <groupId>de.cyclingsir</groupId>
             <artifactId>highlight-calendar-view</artifactId>
             <version>${parent.version}</version>
+						<type>apklib</type>
         </dependency>
     </dependencies>
     <build>
