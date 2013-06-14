@@ -15,7 +15,7 @@
 
     <properties>
 	<!-- Dependencies -->
-        <platform.version> 4.2.2</platform.version>
+        <platform.version>4.2.2</platform.version>
 	    <androidannotations.version>2.7.1</androidannotations.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
