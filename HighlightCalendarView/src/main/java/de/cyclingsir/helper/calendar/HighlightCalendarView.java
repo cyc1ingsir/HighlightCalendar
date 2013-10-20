@@ -973,7 +973,7 @@ public class HighlightCalendarView extends FrameLayout {
     		final int dayHash = getDateHash(day);
 
     		List<DateEvent> daysEvents;
-    		if(dayHash != getDateHash(lastDay) && lastDay > 0) {
+    		if(lastDay > 0 && dayHash != getDateHash(lastDay) ) {
     			daysEvents = mEvents.get(getDateHash(lastDay), null );
     			daysEvents.add(new EventMenuEntry(lastDay, mAddEventText));
     		}
