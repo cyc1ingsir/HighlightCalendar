@@ -3,17 +3,35 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:0.4'
+        classpath 'com.android.tools.build:gradle:0.5.+'
     }
 }
 apply plugin: 'android-library'
+apply plugin: 'maven'
 
-dependencies {
+// http://stackoverflow.com/questions/6122252/gradle-alternate-to-mvn-install
+// http://www.gradle.org/docs/current/userguide/maven_plugin.html
+// http://stackoverflow.com/questions/18559932/gradle-maven-plugin-install-task-does-not-work-with-android-library-project
+
+group = 'de.cyclingsir'
+version = '1.0.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    mavenLocal()
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+          repository(url: "file://${System.env.HOME}/.m2/repository/")
+        }
+    }
 }
 
 android {
-    compileSdkVersion 17
-    buildToolsVersion "17"
+    compileSdkVersion 18
+    buildToolsVersion "18.0.1"
 
     defaultConfig {
         minSdkVersion 14
