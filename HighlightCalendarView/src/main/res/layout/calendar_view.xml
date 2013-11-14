@@ -115,14 +115,13 @@
             android:overScrollMode="never" />
     </LinearLayout>
 
-    <ListView
-        android:id="@+id/eventlist"
+    <FrameLayout
+        android:id="@+id/event_popup_menu"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:layout_margin="12dp"
-        android:background="#E0101010"
         android:padding="12dp"
-        android:visibility="invisible" />
+        tools:layout="@layout/event_menu"/>
 
 </RelativeLayout>

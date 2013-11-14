@@ -7,9 +7,7 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="19" />
 
-    <application
-        android:allowBackup="true"
-        android:theme="@style/AppTheme" >
-    </application>
+    <library
+        android:allowBackup="true"/>
 
 </manifest>

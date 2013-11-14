@@ -1,14 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     
- 	<declare-styleable name="HighlightCalendarView">
-       <!-- The text appearance for the week day abbreviation of the calendar header. -->
-       <attr name="weekDayTextAppearance" format="reference" />
-       <!-- The text appearance for the calendar dates. -->
-       <attr name="dateTextAppearance" format="reference" />
- 	</declare-styleable>
- 	
- 	<declare-styleable name="TextAppearance">
- 	    <attr name="textSize" format="reference" />
- 	</declare-styleable>
+    <declare-styleable name="HighlightCalendarView">
+        <attr name="eventBarColor" format="color" />
+    </declare-styleable>
+
+    <declare-styleable name="Theme" format="reference">
+        <attr name="spinnerStyle" format="reference" />
+        <attr name="popupWindowStyle" format="reference" />
+        <attr name="calendarViewStyle" format="reference" />
+        <attr name="popupMenuStyle" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="TextAppearance">
+        <attr name="android:textSize" />
+    </declare-styleable>
+
+    <declare-styleable name="PopupWindow">
+        <attr name="android:popupBackground" />
+        <attr name="android:popupAnimationStyle" />
+    </declare-styleable>
+
+    <declare-styleable name="MenuView">
+        <!-- Default appearance of menu item text. -->
+        <attr name="android:itemTextAppearance" />
+        <!-- Default horizontal divider between rows of menu items. -->
+        <attr name="android:horizontalDivider" />
+        <!-- Default vertical divider between menu items. -->
+        <attr name="android:verticalDivider" />
+        <!-- Default background for the menu header. -->
+        <attr name="android:headerBackground" />
+        <!-- Default background for each menu item. -->
+        <attr name="android:itemBackground" />
+        <!-- Default animations for the menu. -->
+        <attr name="android:windowAnimationStyle" />
+        <!-- Default disabled icon alpha for each menu item that shows an icon. -->
+        <attr name="android:itemIconDisabledAlpha" />
+        <!-- Whether space should be reserved in layout when an icon is missing. -->
+        <attr name="android:preserveIconSpacing" />
+    </declare-styleable>
+
+    <declare-styleable name="CalendarView">
+        <!-- The first day of week according to {@link java.util.Calendar}. -->
+        <attr name="android:firstDayOfWeek" />
+        <!-- Whether do show week numbers. -->
+        <attr name="android:showWeekNumber" />
+        <!-- The minimal date shown by this calendar view in mm/dd/yyyy format. -->
+        <attr name="android:minDate"/>
+        <!-- The minimal date shown by this calendar view in mm/dd/yyyy format. -->
+        <attr name="android:maxDate"  />
+        <!-- The number of weeks to be shown. -->
+        <attr name="android:shownWeekCount"/>
+        <!-- The background color for the selected week. -->
+        <attr name="android:selectedWeekBackgroundColor"  />
+        <!-- The color for the dates of the focused month. -->
+        <attr name="android:focusedMonthDateColor" />
+        <!-- The color for the dates of an unfocused month. -->
+        <attr name="android:unfocusedMonthDateColor" />
+        <!-- The color for the week numbers. -->
+        <attr name="android:weekNumberColor" />
+        <!-- The color for the separator line between weeks. -->
+        <attr name="android:weekSeparatorLineColor" />
+        <!-- Drawable for the vertical bar shown at the beginning and at the end of the selected date. -->
+        <attr name="android:selectedDateVerticalBar" />
+        <!-- The text appearance for the week day abbreviation of the calendar header. -->
+        <attr name="android:weekDayTextAppearance" />
+        <!-- The text appearance for the calendar dates. -->
+        <attr name="android:dateTextAppearance" />
+    </declare-styleable>
 </resources>
