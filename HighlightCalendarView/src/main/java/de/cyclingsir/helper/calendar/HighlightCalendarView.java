@@ -29,12 +29,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
+import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -1414,7 +1412,7 @@ public class HighlightCalendarView extends FrameLayout {
      * arbitrary number of weeks at a time.
      * </p>
      */
-    private class WeeksAdapter extends BaseAdapter implements OnTouchListener, EventMenuFragment.EventSelectedListener {
+    private class WeeksAdapter extends BaseAdapter implements OnTouchListener {
 
         private int mSelectedWeek;
 
@@ -1535,18 +1533,28 @@ public class HighlightCalendarView extends FrameLayout {
                 final List<DateEvent> list = mEvents.get(dayHash);
                 if(list != null && !list.isEmpty()) {
 
-                    FragmentManager fm = ((Activity) mContext).getFragmentManager();
-                    if (fm.getBackStackEntryCount() > 0) {
-                        fm.popBackStack();
+                    // http://stackoverflow.com/questions/5645235/android-opening-context-menu-after-button-click/5645686#5645686
+                    AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                    CharSequence[] items = new CharSequence[list.size()];
+                    for (int i = 0; i < list.size() ; i++) {
+                        items[i] = list.get(i).toString();
                     }
-                    FragmentTransaction ft = fm.beginTransaction();
+                    builder.setItems(items, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int item) {
+                            DateEvent event = list.get(item);
+                            if( event instanceof EventMenuEntry ) {
+                                mOnDateChangeListener.onAddEvent(event.getDate());
+                            } else {
+                                mOnDateChangeListener.onEventSelected(event);
+                            }
+                        }
+                    });
+                    // ToDo investigate on how to set a custom layout to the items displayed within the menu
+                    // this is useful for displaying more details for a item
+                    // builder.setView()
+                    AlertDialog menu = builder.create();
 
-                    EventMenuFragment popupMenu = new EventMenuFragment();
-                    popupMenu.setEventMenuEntries(list);
-                    popupMenu.setSelectionListener(this);
-                    ft.replace(R.id.event_popup_menu, popupMenu )
-                            .addToBackStack("popup")
-                            .commit();
+                    menu.show();
 
                 } else {
                 	mOnDateChangeListener.onAddEvent(mTempDate.getTimeInMillis());
@@ -1559,16 +1567,6 @@ public class HighlightCalendarView extends FrameLayout {
                 return true;
             }
             return false;
-        }
-
-        @Override
-        public void onEventSelected(DateEvent event) {
-            ((Activity) mContext).getFragmentManager().popBackStack();
-            if( event instanceof EventMenuEntry ) {
-                mOnDateChangeListener.onAddEvent(event.getDate());
-            } else {
-                mOnDateChangeListener.onEventSelected(event);
-            }
         }
 
 
