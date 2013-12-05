@@ -1000,6 +1000,7 @@ public class HighlightCalendarView extends FrameLayout {
      */
     private int getDateHash(long milliseconds){
     	final Calendar cal = Calendar.getInstance();
+        cal.setTimeZone(TimeZone.getTimeZone("UTC"));
     	cal.setTimeInMillis(milliseconds);
     	return getDateHash(cal);
     }
