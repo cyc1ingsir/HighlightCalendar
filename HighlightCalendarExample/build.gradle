@@ -1,18 +1,5 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:0.7.3'
-    }
-}
 apply plugin: 'android'
 
-repositories {
-    mavenCentral()
-    mavenLocal()
-
-}
 
 dependencies {
     compile project(':HighlightCalendarView')
@@ -25,5 +12,7 @@ android {
     defaultConfig {
         minSdkVersion 15
         targetSdkVersion 19;
+        versionCode 1
+        versionName "1.0.0-SNAPSHOT"
     }
 }

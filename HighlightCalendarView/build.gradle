@@ -1,11 +1,3 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:0.7.3'
-    }
-}
 apply plugin: 'android-library'
 apply plugin: 'maven'
 
@@ -16,10 +8,6 @@ apply plugin: 'maven'
 group = 'de.cyclingsir'
 version = '1.0.0-SNAPSHOT'
 
-repositories {
-    mavenCentral()
-    mavenLocal()
-}
 
 uploadArchives {
     repositories {
@@ -36,5 +24,7 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 19
+        versionCode 1
+        versionName "1.0.0-SNAPSHOT"
     }
 }
