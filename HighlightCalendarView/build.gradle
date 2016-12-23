@@ -1,4 +1,4 @@
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
 apply plugin: 'maven'
 
 // http://stackoverflow.com/questions/6122252/gradle-alternate-to-mvn-install
@@ -18,8 +18,8 @@ uploadArchives {
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "20"
+    compileSdkVersion 23
+    buildToolsVersion '25.0.2'
 
     defaultConfig {
         minSdkVersion 14

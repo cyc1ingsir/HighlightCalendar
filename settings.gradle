@@ -1,1 +1,1 @@
-include ':HighlightCalendarExample', ':HighlightCalendarView'
+include ':HighlightCalendarView', ':HighlightCalendarExample'
