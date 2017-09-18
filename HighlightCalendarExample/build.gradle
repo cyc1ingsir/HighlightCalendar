@@ -2,16 +2,16 @@ apply plugin: 'com.android.application'
 
 
 dependencies {
-    compile project(':HighlightCalendarView')
+    implementation project(':HighlightCalendarView')
 }
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '25.0.2'
+    compileSdkVersion 26
+    buildToolsVersion '26.0.0'
 
     defaultConfig {
         minSdkVersion 15
-        targetSdkVersion 19;
+        targetSdkVersion 25;
         versionCode 1
         versionName "1.0.0-SNAPSHOT"
     }

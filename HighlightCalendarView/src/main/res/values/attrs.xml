@@ -21,25 +21,6 @@
         <attr name="android:popupAnimationStyle" />
     </declare-styleable>
 
-    <declare-styleable name="MenuView">
-        <!-- Default appearance of menu item text. -->
-        <attr name="android:itemTextAppearance" />
-        <!-- Default horizontal divider between rows of menu items. -->
-        <attr name="android:horizontalDivider" />
-        <!-- Default vertical divider between menu items. -->
-        <attr name="android:verticalDivider" />
-        <!-- Default background for the menu header. -->
-        <attr name="android:headerBackground" />
-        <!-- Default background for each menu item. -->
-        <attr name="android:itemBackground" />
-        <!-- Default animations for the menu. -->
-        <attr name="android:windowAnimationStyle" />
-        <!-- Default disabled icon alpha for each menu item that shows an icon. -->
-        <attr name="android:itemIconDisabledAlpha" />
-        <!-- Whether space should be reserved in layout when an icon is missing. -->
-        <attr name="android:preserveIconSpacing" />
-    </declare-styleable>
-
     <declare-styleable name="CalendarView">
         <!-- The first day of week according to {@link java.util.Calendar}. -->
         <attr name="android:firstDayOfWeek" />
